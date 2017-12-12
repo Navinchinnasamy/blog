@@ -252,7 +252,9 @@
                         <a class="next-page" href="#">Next</a>
                     </div>
                     <!-- End Pagination -->
-
+					<div class="ads">
+						<SCRIPT charset="utf-8" type="text/javascript" src="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_cw&ServiceVersion=20070822&MarketPlace=IN&ID=V20070822%2FIN%2Fnavin21594-21%2F8010%2F6dc1309c-cb65-4995-906f-455c41fe4008&Operation=GetScriptTemplate"> </SCRIPT> <NOSCRIPT><A rel="nofollow" HREF="http://ws-in.amazon-adsystem.com/widgets/q?rt=tf_cw&ServiceVersion=20070822&MarketPlace=IN&ID=V20070822%2FIN%2Fnavin21594-21%2F8010%2F6dc1309c-cb65-4995-906f-455c41fe4008&Operation=NoScript">Amazon.in Widgets</A></NOSCRIPT>
+					</div>
                 </div>
                 <!-- End Blog Posts -->
 
@@ -350,11 +352,28 @@
                             <a href="#">Google</a>
                         </div>
                     </div>
-
+					<div class="widget">
+						<script type="text/javascript" language="javascript">
+						  var aax_size='300x250';
+						  var aax_pubname = 'navin21594-21';
+						  var aax_src='302';
+						</script>
+						<script type="text/javascript" language="javascript" src="http://c.amazon-adsystem.com/aax2/assoc.js"></script>
+					</div>
+					<div class="widget">
+						<script type="text/javascript" language="javascript">
+						  var aax_size='300x600';
+						  var aax_pubname = 'navin21594-21';
+						  var aax_src='302';
+						</script>
+						<script type="text/javascript" language="javascript" src="http://c.amazon-adsystem.com/aax2/assoc.js"></script>
+					</div>
+					<div class="widget">
+						<script type="text/javascript">amzn_assoc_ad_type ="responsive_search_widget"; amzn_assoc_tracking_id ="navin21594-21"; amzn_assoc_marketplace ="amazon"; amzn_assoc_region ="IN"; amzn_assoc_placement =""; amzn_assoc_search_type = "search_widget";amzn_assoc_width ="250"; amzn_assoc_height ="610"; amzn_assoc_default_search_category ="Electronics"; amzn_assoc_default_search_key ="";amzn_assoc_theme ="light"; amzn_assoc_bg_color ="FFFFFF"; </script><script src="//z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&Marketplace=IN"></script>
+					</div>
                 </div>
                 <!--End sidebar-->
-
-
+				
             </div>
         </div>
     </div>
