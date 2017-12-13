@@ -1,6 +1,11 @@
 <?php
 $url = explode("/", $_SERVER['REQUEST_URI']);
-$page = $url[1];
+if ($environment == "development") {
+    $page = $url[2];
+} else {
+    $page = $url[1];
+}
+
 ?>
 <!-- Start Header Section -->
 <div class="hidden-header"></div>
@@ -111,15 +116,18 @@ $page = $url[1];
                     <li>
                         <a class="<?php echo ($page == "portfolio.php") ? "active" : ""; ?>" href="portfolio.php">Portfolio</a>
                     </li>
-                    <li>
-                        <a class="<?php echo ($page == "blog.php") ? "active" : ""; ?>" href="blog.php">Blog</a>
+                    <!--<li>
+                        <a class="<?php /*echo ($page == "blog.php") ? "active" : ""; */ ?>" href="blog.php">Blog</a>
                         <ul class="dropdown">
-                            <li><a class="<?php echo ($page == "blog.php") ? "active" : ""; ?>" href="blog.php">Blog -
+                            <li><a class="<?php /*echo ($page == "blog.php") ? "active" : ""; */ ?>" href="blog.php">Blog -
                                     right Sidebar</a>
-                            <li><a class="<?php echo ($page == "single-post.php") ? "active" : ""; ?>"
+                            <li><a class="<?php /*echo ($page == "single-post.php") ? "active" : ""; */ ?>"
                                    href="single-post.php">Blog Single Post</a>
                             </li>
                         </ul>
+                    </li>-->
+                    <li>
+                        <a class="<?php echo ($page == "about.php") ? "active" : ""; ?>" href="about.php">About</a>
                     </li>
                     <li><a class="<?php echo ($page == "contact.php") ? "active" : ""; ?>"
                            href="contact.php">Contact</a>
@@ -137,16 +145,19 @@ $page = $url[1];
             <li>
                 <a class="<?php echo ($page == "portfolio.php") ? "active" : ""; ?>" href="portfolio.php">Portfolio</a>
             </li>
-            <li>
-                <a class="<?php echo ($page == "blog.php") ? "active" : ""; ?>" href="blog.php">Blog</a>
+            <!--<li>
+                <a class="<?php /*echo ($page == "blog.php") ? "active" : ""; */ ?>" href="blog.php">Blog</a>
                 <ul class="dropdown">
-                    <li><a class="<?php echo ($page == "blog.php") ? "active" : ""; ?>" href="blog.php">Blog - right
+                    <li><a class="<?php /*echo ($page == "blog.php") ? "active" : ""; */ ?>" href="blog.php">Blog - right
                             Sidebar</a>
                     </li>
-                    <li><a class="<?php echo ($page == "single-post.php") ? "active" : ""; ?>" href="single-post.php">Blog
+                    <li><a class="<?php /*echo ($page == "single-post.php") ? "active" : ""; */ ?>" href="single-post.php">Blog
                             Single Post</a>
                     </li>
                 </ul>
+            </li>-->
+            <li>
+                <a class="<?php echo ($page == "about.php") ? "active" : ""; ?>" href="about.php">About</a>
             </li>
             <li>
                 <a class="<?php echo ($page == "contact.php") ? "active" : ""; ?>" href="contact.php">Contact</a>

@@ -15,7 +15,8 @@
     <?php require_once("body_header.php"); ?>
 
     <!-- Start Map -->
-    <div id="map" data-position-latitude="11.074893" data-position-longitude="77.579988"></div>
+    <div id="map" data-position-latitude="11.074893" data-position-longitude="77.579988"
+         data-marker-img="<?php echo BASE_URL . 'images/location.png' ?>"></div>
     <script>
         (function ($) {
             $.fn.CustomMap = function (options) {
@@ -248,7 +249,8 @@
     <!-- End content -->
 
     <?php require_once("footer.php"); ?>
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyCgk0dZVkbXmkwari4SfU6B4t0XlFxHpZ0"
+            type="text/javascript"></script>
 
 </div>
 <!-- End Container -->
