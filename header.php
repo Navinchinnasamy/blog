@@ -73,11 +73,4 @@ require_once("config.php");
     <script type="text/javascript" src="js/jquery.parallax.js"></script>
     <script type="text/javascript" src="js/mediaelement-and-player.js"></script>
     <script type="text/javascript" src="js/jquery.slicknav.js"></script>
-
-
-    <!--[if IE 8]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
 </head>

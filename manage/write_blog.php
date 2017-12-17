@@ -1,24 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Admin > MyBlogs</title>
-    <meta charset="utf-8">
-    <meta content="ie=edge" http-equiv="x-ua-compatible">
-    <meta content="template language" name="keywords">
-    <meta content="Navin Chinnasamy" name="author">
-    <meta content="Admin dashboard" name="description">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <link href="favicon.png" rel="shortcut icon">
-    <link href="apple-touch-icon.png" rel="apple-touch-icon">
-    <link href="//fast.fonts.net/cssapi/175a63a1-3f26-476a-ab32-4e21cbdb8be2.css" rel="stylesheet" type="text/css">
-    <link href="bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
-    <link href="bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="bower_components/dropzone/dist/dropzone.css" rel="stylesheet">
-    <link href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
-    <link href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
-    <link href="css/main.css?version=2.6" rel="stylesheet">
-</head>
+<?php 
+require_once("header.php");
+$categories = $fn->getMasters('post_categories');
+?>
 <body>
 <div class="all-wrapper menu-top">
     <div class="layout-w">
@@ -38,197 +23,78 @@
             <div class="content-i">
                 <div class="content-box">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <div class="element-wrapper">
                                 <h6 class="element-header">
                                     Write a Blog
                                 </h6>
                                 <div class="element-box">
-                                    <form>
+                                    <form action="post_handler.php" method="post" enctype="multipart/form-data">
+										<input type="hidden" name="reqfor" id="reqfor" value="create_post" />
                                         <div class="steps-w">
                                             <div class="step-triggers">
-                                                <a class="step-trigger active" href="#stepContent1">First Step</a><a
-                                                        class="step-trigger" href="#stepContent2">Second Step</a><a
-                                                        class="step-trigger" href="#stepContent3">Third Step</a>
+                                                <a class="step-trigger active" href="#postinitarea">Post Name & Description</a>
+												<a class="step-trigger" href="#postimagearea">Post Image</a>
+												<a class="step-trigger" href="#postcontentarea">Post Content</a>
                                             </div>
                                             <div class="step-contents">
-                                                <div class="step-content active" id="stepContent1">
+                                                <div class="step-content active" id="postinitarea">
                                                     <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for=""> First Name</label>
-                                                                <input class="form-control" placeholder="Post Name" data-error="Your name is required" placeholder="Give a name to your Post" required="required"
-                                                                       type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="">Last Name</label><input
-                                                                        class="form-control" placeholder="Last Name"
-                                                                        type="text">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for=""> Date of Birth</label><input
-                                                                        class="form-control" placeholder="First Name"
-                                                                        type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="">Country of Origin</label><input
-                                                                        class="form-control" placeholder="Last Name"
-                                                                        type="text">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+														<div class="form-group col-sm-6">
+															<label for=""> Post Title</label>
+															<input class="form-control" name="post_title" id="postName" data-error="Your Post needs a title.." placeholder="Give a title to your Post" required="required"
+																   type="text">
+														</div>
+														<div class="form-group col-sm-6">
+															<label for=""> Post Category</label>
+															<select class="form-control" name="	post_category_id" id="postCategory" data-error="Categorize your post for better view" required="required">
+															<option value="" style="display:none;">Pick Post Category</option>
+															<?php
+															foreach($categories as $id => $cat){
+																echo "<option value='{$cat['id']}'>{$cat['category']}</option>";
+															}
+															?>
+															</select>
+														</div>
+													</div>
                                                     <div class="form-group">
-                                                        <label for=""> States with Offices</label><select
-                                                                class="form-control select2" multiple="true">
-                                                            <option selected="true">
-                                                                New York
-                                                            </option>
-                                                            <option selected="true">
-                                                                California
-                                                            </option>
-                                                            <option>
-                                                                Boston
-                                                            </option>
-                                                            <option>
-                                                                Texas
-                                                            </option>
-                                                            <option>
-                                                                Colorado
-                                                            </option>
-                                                        </select>
+                                                        <label for="postShortDesc"> Short Description about the Post</label>
+                                                        <textarea id="postShortDesc" name="post_description" class="form-control" rows="3" placeholder="Give us a short description about your post.."></textarea>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for=""> Regular select</label><select
-                                                                class="form-control">
-                                                            <option>
-                                                                Select State
-                                                            </option>
-                                                            <option>
-                                                                New York
-                                                            </option>
-                                                            <option>
-                                                                California
-                                                            </option>
-                                                            <option>
-                                                                Boston
-                                                            </option>
-                                                            <option>
-                                                                Texas
-                                                            </option>
-                                                            <option>
-                                                                Colorado
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label> Example textarea</label><textarea class="form-control"
-                                                                                                  rows="3"></textarea>
-                                                    </div>
-                                                    <div class="form-buttons-w text-right">
+                                                    <div class="form-buttons-w text-right" id="add_name_desc">
                                                         <a class="btn btn-primary step-trigger-btn"
-                                                           href="#stepContent2"> Continue</a>
+                                                           href="#postimagearea"> Add Image</a>
                                                     </div>
                                                 </div>
-                                                <div class="step-content" id="stepContent2">
+                                                <div class="step-content" id="postimagearea">
                                                     <div class="form-group">
-                                                        <label for=""> Email address</label><input class="form-control"
-                                                                                                   placeholder="Enter email"
-                                                                                                   type="email">
+                                                        <label for="postImage"> Pick an Image for your post</label>
+                                                        <div action="write_post.php" class="dropzone dz-clickable" id="postImage" name="post_image">
+															<div class="dz-message">
+															  <div>
+																<h4>Drop an image for your post.</h4><div class="text-muted">(This will be displayed on the top of your post..)</div>
+															  </div>
+															</div>
+														</div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for=""> Password</label><input
-                                                                        class="form-control" placeholder="Password"
-                                                                        type="password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="">Confirm Password</label><input
-                                                                        class="form-control" placeholder="Password"
-                                                                        type="password">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for=""> Regular select</label><select
-                                                                class="form-control">
-                                                            <option>
-                                                                Select State
-                                                            </option>
-                                                            <option>
-                                                                New York
-                                                            </option>
-                                                            <option>
-                                                                California
-                                                            </option>
-                                                            <option>
-                                                                Boston
-                                                            </option>
-                                                            <option>
-                                                                Texas
-                                                            </option>
-                                                            <option>
-                                                                Colorado
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-buttons-w text-right">
+													<br/>OR<br/>
+													<div class="form-group col-sm-6">
+														<label for=""> Post Image URL</label>
+														<input class="form-control" placeholder="Post Image URL" name="post_image_url" id="postImageURL" data-error="Your Post needs an Image.."
+															   type="text">
+													</div>
+                                                    <div class="form-buttons-w text-right" id="add_post_image">
                                                         <a class="btn btn-primary step-trigger-btn"
-                                                           href="#stepContent3"> Continue</a>
+                                                           href="#postcontentarea"> Add Content</a>
                                                     </div>
                                                 </div>
-                                                <div class="step-content" id="stepContent3">
+                                                <div class="step-content" id="postcontentarea">
                                                     <div class="form-group">
-                                                        <label for=""> Regular select</label><select
-                                                                class="form-control">
-                                                            <option>
-                                                                Select State
-                                                            </option>
-                                                            <option>
-                                                                New York
-                                                            </option>
-                                                            <option>
-                                                                California
-                                                            </option>
-                                                            <option>
-                                                                Boston
-                                                            </option>
-                                                            <option>
-                                                                Texas
-                                                            </option>
-                                                            <option>
-                                                                Colorado
-                                                            </option>
-                                                        </select>
+                                                        <label for="postContentEditor"> Post Contents</label>
+                                                        <textarea cols="80" id="postContentEditor" name="post_content" rows="10" placeholder="Start write your post here.." ></textarea>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for=""> Date of Birth</label><input
-                                                                        class="form-control" placeholder="First Name"
-                                                                        type="text">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label for="">Country of Origin</label><input
-                                                                        class="form-control" placeholder="Last Name"
-                                                                        type="text">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-buttons-w text-right">
-                                                        <button class="btn btn-primary">Submit Form</button>
+                                                    <div class="form-buttons-w text-right" id="submitPost">
+                                                        <button type="submit" class="btn btn-primary">Submit Post</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -237,16 +103,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div calss="col-sm-4">
+                        <!--<div calss="col-sm-4">
                             <div class="element-wrapper">
                                 <h6 class="element-header">
                                     Recent Posts
                                 </h6>
                                 <div class="element-box">
-                                    
+
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -270,5 +136,20 @@
 <script src="bower_components/bootstrap/js/dist/util.js"></script>
 <script src="bower_components/bootstrap/js/dist/tab.js"></script>
 <script src="js/main.js?version=2.6"></script>
+<script>
+    $(document).ready(function() {
+		if ($('#postContentEditor').length) {
+			CKEDITOR.replace('postContentEditor');
+		}
+		
+		// >>> Validate the required data for post
+		$("body").on("click", ".btn-primary", function(){
+			var fg = $(this).closest("div.step-content").find(".form-group");
+			$.each($(fg).find("input, textarea"), function(i, d){
+				console.log($(d).val());
+			});
+		});
+    });
+</script>
 </body>
 </html>
