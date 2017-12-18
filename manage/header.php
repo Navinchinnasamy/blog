@@ -1,10 +1,15 @@
-<?php 
-require_once("../config/config.php");
-spl_autoload_register(function ($class_name) {
-    include '../classes/'.$class_name . '.php';
-});
-$fn = new functions(DB_TYPE, HOST, DATABASE, DB_USER, DB_PASSWORD, PORT);
-$conn = $fn::$conn;
+<?php
+	require_once( "../config/config.php" );
+	spl_autoload_register( function ( $class_name ) {
+		include '../classes/' . $class_name . '.php';
+	} );
+	$fn   = functions::getInstance();
+	$page = basename( $_SERVER['PHP_SELF'] );
+	if ( ! isset( $_SESSION[ BASE_FOLDER ]['author'] ) && $page != "login.php" ) {
+		header( "Location: login.php" );
+	} else if ( isset( $_SESSION[ BASE_FOLDER ]['author'] ) && $page == "login.php" ) {
+		header( "Location: write_blog.php" );
+	}
 ?>
 <head>
     <title>Admin > MyBlogs</title>

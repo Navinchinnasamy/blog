@@ -95,11 +95,15 @@ CREATE TABLE post_categories
   updated_at  DATETIME
 );
 
-/* >>>>>>>>>>>>>>>>>>> RUN BELOW TO UPDATE DATABASE => 17 DEC, 2017 04:25 PM */ 
+/* >>>>>>>>>>>>>>>>>>> RUN BELOW TO UPDATE DATABASE => 17 DEC, 2017 04:25 PM */
 ALTER TABLE `post_categories` CHANGE `category` `category` VARCHAR(100) NULL DEFAULT NULL;
 ALTER TABLE `post_categories` CHANGE `description` `description` TEXT NULL DEFAULT NULL;
 ALTER TABLE `posts` ADD `post_image_url` TEXT NOT NULL AFTER `post_image`;
 ALTER TABLE `posts` ADD `post_category_id` INT NOT NULL AFTER `author_id`;
+ALTER TABLE `users`
+  ADD `profile_pic` VARCHAR(250) NOT NULL
+  AFTER `display_name`;
 
 /* >>> To add post category initially */
 INSERT INTO `post_categories` (`id`, `category`, `description`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES ('1', 'Technical', 'Some technical stuff or Programming related info.', 'active', '1', CURRENT_TIMESTAMP, NULL, NULL), ('2', 'General', 'Your personal experience or not technical information/experience.', 'active', '1', CURRENT_TIMESTAMP, NULL, NULL)
+

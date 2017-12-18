@@ -1,14 +1,17 @@
 <?php
 /* Basic operations to be done */
+	require_once "../config/config.php";
+
 class functions {
+	private static $instance = null;
 	public static $conn = null;
-	public $session = array();
 	public $user = array();
-	
+
 	public function __construct($db_type, $host, $db_name, $db_user, $db_pass, $port){
 		if(!isset($_SESSION)){
 			session_start();
 		}
+
 		if($db_type == "postgres"){
 			try {
 				self::$conn = new PDO("pgsql:host={$host};port={$port};dbname={$db_name}", $db_user, $db_pass);
@@ -27,36 +30,43 @@ class functions {
 			}
 		}
 	}
-	
-	public function getSession($proj){
-		if(!isset($_SESSION[$proj])){
-			$_SESSION[$proj] = array();
+
+	public static function getInstance() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self( DB_TYPE, HOST, DATABASE, DB_USER, DB_PASSWORD, PORT );
 		}
-		$this->session = $_SESSION[$proj];
-		return $this->session;
+
+		return self::$instance;
 	}
-	
+
+	public static function getSession() {
+		return $_SESSION[ BASE_FOLDER ];
+	}
+
 	public function setSession($values){
+		if ( ! isset( $_SESSION[ BASE_FOLDER ] ) ) {
+			$_SESSION[ BASE_FOLDER ] = array();
+		}
 		foreach($values as $k => $v){
-			$this->session[$k] = $v;
+			$_SESSION[ BASE_FOLDER ][ $k ] = $v;
 		}
 	}
-	
+
 	public function getCurrentUser(){
-		$this->user = self::$session['user'];
+		$this->user = $_SESSION[ BASE_FOLDER ]['user'];
 		return $this->user;
 	}
-	
+
 	protected function clearSession(){
-		self::$session = array();
+		$_SESSION[ BASE_FOLDER ] = array();
 		session_destroy();
 	}
-	
+
 	public function getMasters($table, $id=null, $orderColumn = 'id', $order = 'ASC'){
 		$where  = ($id > 0) ? " AND id = :id " : "";
 		$sql = "SELECT * FROM `{$table}` WHERE status='active' {$where} ORDER BY `{$orderColumn}` {$order}";
 		$qry = self::$conn->prepare($sql);
-		
+
 		if($id > 0){
 			$qry->bindValue(':id', $id);
 		}
@@ -66,7 +76,7 @@ class functions {
 		//$qry->close();
 		return $result;
 	}
-	
+
 	public function insertUpdate($table, $inp, $other = null){
 		$columns = array_keys($inp);
 		$values = str_repeat("?, ", count($columns));
@@ -87,13 +97,13 @@ class functions {
 		//$qry->close();
 		return "success";
 	}
-	
+
 	public function checkDuplicate($table, $column, $value){
 		$where  = " AND {$column} = :value ";
 		$sql = "SELECT * FROM `{$table}` WHERE status='active' {$where}";
 		$qry = self::$conn->prepare($sql);
 		$qry->bindValue(':value', $value);
-		
+
 		$qry->execute();
 		$result = $qry->fetchAll(PDO::FETCH_ASSOC);
 		//$qry->close();

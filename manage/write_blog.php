@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-<?php 
+<?php
 require_once("header.php");
-$categories = $fn->getMasters('post_categories');
+
+	$categories = $fn->getMasters('post_categories');
 ?>
 <body>
 <div class="all-wrapper menu-top">
@@ -141,8 +142,8 @@ $categories = $fn->getMasters('post_categories');
 		if ($('#postContentEditor').length) {
 			CKEDITOR.replace('postContentEditor');
 		}
-		
-		// >>> Validate the required data for post
+
+        // >>> Validate the required data for post
 		$("body").on("click", ".btn-primary", function(){
 			var fg = $(this).closest("div.step-content").find(".form-group");
 			$.each($(fg).find("input, textarea"), function(i, d){
