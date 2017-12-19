@@ -57,7 +57,7 @@ class functions {
 		return $this->user;
 	}
 
-	protected function clearSession(){
+	public static function clearSession() {
 		$_SESSION[ BASE_FOLDER ] = array();
 		session_destroy();
 	}

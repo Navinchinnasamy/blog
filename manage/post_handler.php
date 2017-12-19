@@ -31,9 +31,4 @@
 		default:
 			break;
 	}
-
-	function createPost( $inp ) {
-
-	}
-
 ?>

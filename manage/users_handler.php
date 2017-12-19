@@ -7,6 +7,12 @@
 
 	$files = $_FILES;
 	$post  = $_POST;
+	$roles = $fn->getMasters( 'roles' );
+	$roles = array_reduce( $roles, function ( $ret, $val ) {
+		$ret[ $val['id'] ] = $val;
+
+		return $ret;
+	} );
 
 	switch ( $post['reqfor'] ) {
 		case "author_login":
@@ -25,7 +31,8 @@
 							'author_name'   => $dup[0]['display_name'],
 							'author_email'  => $dup[0]['email'],
 							'author_mobile' => $dup[0]['mobile'],
-							'role_id'       => $dup[0]['role_id']
+							'role_id'       => $dup[0]['role_id'],
+							'role'          => $roles[ $dup[0]['role_id'] ]['role_name']
 						)
 					);
 					$fn->setSession( $author );
@@ -42,6 +49,11 @@
 			$fn->setSession( $response );
 			header( "Location: {$redir_to}" );
 			break;
+
+		case "author_logout":
+			$fn::clearSession();
+			break;
+
 		default:
 			break;
 	}
