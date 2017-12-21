@@ -10,6 +10,7 @@
 		private static $instance = null;
 
 		public function __construct() {
+			functions::getInstance();
 		}
 
 		public static function getInstance() {
@@ -21,19 +22,18 @@
 		}
 
 		public function getAllPosts( $count = 10, $page = 1 ) {
-			$sql    = "SELECT * FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id WHERE p.status='active' ORDER BY a.created_at DESC LIMIT :limit OFFSET :offset";
 			$offset = ( ( ( $page * $count ) - $count ) + 1 );
+			$sql    = "SELECT * FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id WHERE p.status='active' ORDER BY a.created_at DESC LIMIT {$count} OFFSET {$offset}";
 			$qry    = functions::$conn->prepare( $sql );
-			$qry->bindParam( ':limit', $count );
-			$qry->bindParam( ':offset', $offset );
-			$res = $qry->execute()->fetchAll( PDO::FETCH_ASSOC );
-
+			$qry->execute();
+			$res = $qry->fetchAll( PDO::FETCH_ASSOC );
 			return $res;
 		}
 
 		public function getAllPostsByAuthor( $author, $count = 10, $page = 1 ) {
 			$offset = ( ( ( $page * $count ) - $count ) + 1 );
 			$sql    = "SELECT p.id AS post_id, p.status AS post_status, p.*, a.* FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id WHERE a.id = :author_id ORDER BY a.created_at DESC LIMIT {$count} OFFSET {$offset}";
+
 			$qry    = functions::$conn->prepare( $sql );
 			$qry->bindParam( ':author_id', $author, PDO::PARAM_INT );
 			$qry->execute();

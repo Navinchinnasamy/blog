@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    <a href="http://www.Amazon.in/exec/obidos/redirect-home?tag=navin21594-21&placement=home_multi.gif&site=amazon">
+    <!--<a href="http://www.Amazon.in/exec/obidos/redirect-home?tag=navin21594-21&placement=home_multi.gif&site=amazon">
         <img src="http://g-ec2.images-amazon.com/images/G/31/associates/promohub/amazonIN_logo_200_75.jpg?tag-id=navin21594-21"
              border="0" alt="In Association with Amazon.in">
     </a>
@@ -134,6 +134,6 @@
             amzn_assoc_theme = "light";
             amzn_assoc_bg_color = "FFFFFF"; </script>
         <script src="//z-in.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&Marketplace=IN"></script>
-    </div>
+    </div>-->
 </div>
 <!--End sidebar-->

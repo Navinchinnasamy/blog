@@ -87,6 +87,57 @@
 
 <script type="text/javascript" src="js/script.js"></script>
 
+<script type="text/javascript">
+    var count = 10, page = 1, fetchedAllPosts = false;
+    $(function () {
+        getAllPosts();
+
+        /** >>> Get Posts on Scroll down (Lazy Loading effect)**/
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() == ($(document).height() - $(window).height() - 30) && !fetchedAllPosts) {
+                //getAllPosts();
+            }
+        });
+        /** <<< Get Posts on Scroll down (Lazy Loading effect)**/
+    });
+
+    function getAllPosts() {
+        $.ajax({
+            type: "POST",
+            url: "manage/post_handler.php",
+            data: {
+                "reqfor": "getAllPosts",
+                "count": count,
+                "page": page
+            },
+            success: function (ret) {
+                page = page + 1;
+                ret = JSON.parse(ret);
+                if (ret.length < count) {
+                    allPostsFetched = true;
+                }
+                $.each(ret, function (i, p) {
+                    console.log(p);
+                    generateTemplate(p);
+                });
+            }
+        });
+    }
+
+    function generateTemplate(post) {
+        post.reqfor = "generateTemplete";
+        $.ajax({
+            type: "POST",
+            url: "manage/post_handler.php",
+            data: post,
+            success: function (ret) {
+                ret = JSON.parse(ret);
+                console.log(ret);
+            }
+        });
+    }
+</script>
+
 </body>
 
 </html>

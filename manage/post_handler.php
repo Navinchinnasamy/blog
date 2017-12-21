@@ -6,6 +6,7 @@
 
 	$fn = functions::getInstance();
 	$p  = posts::getInstance();
+	$pg = PostGenerator::getInstance();
 
 	$files = $_FILES;
 	$post  = $_POST;
@@ -46,6 +47,16 @@
 			unset( $post['reqfor'] );
 			$posts = $fn->insertUpdate( 'posts', $post, array( 'for' => 'update' ) );
 			print_r( json_encode( $posts ) );
+			break;
+
+		case "getAllPosts":
+			$posts = $p->getAllPosts( $post['count'], $post['page'] );
+			print_r( json_encode( $posts ) );
+			break;
+
+		case "generateTemplete":
+			$template = $pg->postGenerate( $post );
+			print_r( json_encode( $template ) );
 			break;
 
 		default:
