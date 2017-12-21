@@ -57,9 +57,13 @@ class functions {
 		return $this->user;
 	}
 
-	public static function clearSession() {
-		$_SESSION[ BASE_FOLDER ] = array();
-		session_destroy();
+	public static function clearSession( $key = null ) {
+		if ( $key ) {
+			$_SESSION[ BASE_FOLDER ][ $key ] = array();
+		} else {
+			$_SESSION[ BASE_FOLDER ] = array();
+			session_destroy();
+		}
 	}
 
 	public function getMasters($table, $id=null, $orderColumn = 'id', $order = 'ASC'){
@@ -78,24 +82,34 @@ class functions {
 	}
 
 	public function insertUpdate($table, $inp, $other = null){
-		$columns = array_keys($inp);
-		$values = str_repeat("?, ", count($columns));
-		$values = trim($values, ', ');
-		$columns = implode(', ', $columns);
-		$sql = "INSERT INTO {$table} ({$columns}) VALUES ({$values})";
+		$columns    = array_keys($inp);
+		$values     = str_repeat("?, ", count($columns));
+		$values     = trim($values, ', ');
+		$inscolumns = implode( ', ', $columns );
+		$sql        = "INSERT INTO {$table} ({$inscolumns}) VALUES ({$values})";
+
+		$values = array_values( $inp );
+
 		if(!empty($other)){
 			if(isset($other['for']) && $other['for'] == "update"){
-				$sql = "UPDATE {$table} ";
+				$updcolumns    = implode( '=?, ', $columns );
+				$update_column = isset( $other['update_column'] ) ?: "id";
+				$sql           = "UPDATE {$table} SET {$updcolumns}=? WHERE {$update_column} = ?";
 			}
 		}
-		$values = array_values($inp);
+
 		$qry = self::$conn->prepare($sql);
 		for($i = 1; $i <= count($values); $i++){
 			$qry->bindValue($i, $values[$i-1]);
 		}
-		$qry->execute();
+
+		if ( isset( $other['for'] ) && $other['for'] == "update" ) {
+			$qry->bindValue( count( $values ) + 1, $inp[ $update_column ] );
+		}
+
+		$res = $qry->execute();
 		//$qry->close();
-		return "success";
+		return $res;
 	}
 
 	public function checkDuplicate($table, $column, $value){

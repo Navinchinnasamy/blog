@@ -23,13 +23,14 @@
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
 <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
-<script src="bower_components/bootstrap/js/dist/util.js"></script>
-<script src="bower_components/bootstrap/js/dist/tab.js"></script>
+<script src="plugins/jquery.toast/jquery.toast.js"></script>
 <script src="js/main.js?version=2.6"></script>
+<script src="js/custom.js"></script>
 
 <?php
 	if ( isset( $fn::getSession()['notification'] ) ) {
 		echo "<script> var notify='" . json_encode( $fn::getSession()['notification'] ) . "'; var notification = JSON.parse(notify); </script>";
+		$fn::clearSession( 'notification' );
 	}
 ?>
 <script>
@@ -50,8 +51,8 @@
             });
         });
 
-        if (typeof(notification) != "undefined" && $.isEmptyObject(notification)) {
-
+        if (typeof(notification) != "undefined" && !$.isEmptyObject(notification)) {
+            $()._toast(notification.title, notification.message, notification.type);
         }
     });
 </script>

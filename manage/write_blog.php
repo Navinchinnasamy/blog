@@ -29,7 +29,7 @@
                                     Write a Blog
                                 </h6>
                                 <div class="element-box">
-                                    <form action="post_handler.php" method="post" enctype="multipart/form-data">
+                                    <div id="post_creation">
                                         <input type="hidden" name="reqfor" id="reqfor" value="create_post"/>
                                         <div class="steps-w">
                                             <div class="step-triggers">
@@ -51,18 +51,18 @@
                                                         </div>
                                                         <div class="form-group col-sm-6">
                                                             <label for=""> Post Category</label>
-                                                            <select class="form-control" name="	post_category_id"
+                                                            <select class="form-control" name="post_category_id"
                                                                     id="postCategory"
                                                                     data-error="Categorize your post for better view"
                                                                     required="required">
                                                                 <option value="" style="display:none;">Pick Post
                                                                     Category
                                                                 </option>
-			                                                    <?php
-				                                                    foreach ( $categories as $id => $cat ) {
-					                                                    echo "<option value='{$cat['id']}'>{$cat['category']}</option>";
-				                                                    }
-			                                                    ?>
+		                                                        <?php
+			                                                        foreach ( $categories as $id => $cat ) {
+				                                                        echo "<option value='{$cat['id']}'>{$cat['category']}</option>";
+			                                                        }
+		                                                        ?>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -74,36 +74,41 @@
                                                                   placeholder="Give us a short description about your post.."></textarea>
                                                     </div>
                                                     <div class="form-buttons-w text-right" id="add_name_desc">
-                                                        <a class="btn btn-primary step-trigger-btn"
-                                                           href="#postimagearea"> Add Image</a>
+                                                        <button class="btn btn-primary step-trigger-btn"
+                                                                data-href="#postimagearea"> Add Image
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <div class="step-content" id="postimagearea">
-                                                    <div class="form-group">
-                                                        <label for="postImage"> Pick an Image for your post</label>
-                                                        <div action="write_post.php" class="dropzone dz-clickable"
-                                                             id="postImage" name="post_image">
-                                                            <div class="dz-message">
-                                                                <div>
-                                                                    <h4>Drop an image for your post.</h4>
-                                                                    <div class="text-muted">(This will be displayed on
-                                                                        the top of your post..)
+                                                    <div class="row">
+                                                        <div class="form-group col-sm-5">
+                                                            <label for="postImage"> Pick an Image for your post</label>
+                                                            <div action="write_post.php" class="my_dropzone dropzone"
+                                                                 id="postImage" name="post_image">
+                                                                <div class="dz-message">
+                                                                    <div>
+                                                                        <h4>Drop an image for your post.</h4>
+                                                                        <div class="text-muted">(This will be displayed
+                                                                            on
+                                                                            the top of your post..)
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <br/>OR<br/>
-                                                    <div class="form-group col-sm-6">
-                                                        <label for=""> Post Image URL</label>
-                                                        <input class="form-control" placeholder="Post Image URL"
-                                                               name="post_image_url" id="postImageURL"
-                                                               data-error="Your Post needs an Image.."
-                                                               type="text">
+                                                        <div class="form-group col-sm-1" style="margin: auto;"> OR</div>
+                                                        <div class="form-group col-sm-5" style="margin: auto;">
+                                                            <label for=""> Post Image URL</label>
+                                                            <input class="form-control" placeholder="Post Image URL"
+                                                                   name="post_image_url" id="postImageURL"
+                                                                   data-error="Your Post needs an Image.."
+                                                                   type="text">
+                                                        </div>
                                                     </div>
                                                     <div class="form-buttons-w text-right" id="add_post_image">
-                                                        <a class="btn btn-primary step-trigger-btn"
-                                                           href="#postcontentarea"> Add Content</a>
+                                                        <button class="btn btn-primary step-trigger-btn"
+                                                                data-href="#postcontentarea"> Add Content
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <div class="step-content" id="postcontentarea">
@@ -120,20 +125,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!--<div calss="col-sm-4">
-                            <div class="element-wrapper">
-                                <h6 class="element-header">
-                                    Recent Posts
-                                </h6>
-                                <div class="element-box">
-
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -145,18 +140,66 @@
 	require_once "footer.php";
 ?>
 <script>
+    Dropzone.autoDiscover = false;
     $(document).ready(function () {
         if ($('#postContentEditor').length) {
             CKEDITOR.replace('postContentEditor');
         }
 
+        console.log($("body").find("button"));
+
         // >>> Validate the required data for post
-        $("body").on("click", ".btn-primary", function () {
+        $("body").on("click", "button", function () {
+            alert(77777);
+        });
+
+        /*$("body").on("click", "button", function () {
+            alert(123); return false;
             var fg = $(this).closest("div.step-content").find(".form-group");
             $.each($(fg).find("input, textarea"), function (i, d) {
                 console.log($(d).val());
             });
+        });*/
+
+        var myDropzone = new Dropzone(".my_dropzone", {
+            url: "post_handler.php",
+            maxFiles: 1,
+            autoProcessQueue: false,
+            addRemoveLinks: true,
+            thumbnailWidth: null,
+            thumbnailHeight: null,
+            acceptedFiles: "image/*",
+            init: function () {
+                this.on("sending", function (file, xhr, data) {
+                    $.each($("body").find("#post_creation input,select,textarea"), function (i, d) {
+                        data.append($(d).attr('name'), $(d).val());
+                    });
+                });
+                this.on("thumbnail", function (file, dataUrl) {
+
+                });
+                this.on("maxfilesexceeded", function (file) {
+
+                });
+                this.on('addedfile', function (file) {
+
+                });
+                this.on('removedfile', function (file) {
+
+                });
+                this.on("success", function (file) {
+
+                })
+            },
+            success: function (file, response) {
+                window.location.reload();
+            }
         });
+
+        $("body").on("click", "button[type='submit']", function () {
+            myDropzone.processQueue();
+        });
+
     });
 </script>
 </body>

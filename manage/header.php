@@ -28,5 +28,7 @@
     <link href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
     <link href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="plugins/jquery.toast/jquery.toast.css" rel="stylesheet">
     <link href="css/main.css?version=2.6" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
 </head>

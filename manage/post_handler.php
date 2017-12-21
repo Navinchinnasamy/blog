@@ -3,17 +3,25 @@
 	spl_autoload_register( function ( $class_name ) {
 		include '../classes/' . $class_name . '.php';
 	} );
-	$fn    = functions::getInstance();
-	$files = $_FILES;
 
-	$post = $_POST;
+	$fn = functions::getInstance();
+	$p  = posts::getInstance();
+
+	$files = $_FILES;
+	$post  = $_POST;
 	switch ( $post['reqfor'] ) {
 		case "create_post":
 			unset( $post['reqfor'] );
-			$post['author_id']        = 1;
-			$response['notification'] = array();
+			$uh   = new UploadHandler();
+			$uhr  = json_encode( $uh );
+			$uhra = json_decode( $uhr, true );
+			$fres = $uhra['response']['file'][0];
 
-			$res = $fn->insertUpdate( 'posts', $post );
+			$post['author_id']  = $fn::getSession()['author']['author_id'];
+			$post['post_image'] = $fres['url'];
+
+			$response['notification'] = array();
+			$res                      = $fn->insertUpdate( 'posts', $post );
 			if ( $res == "success" ) {
 				// POSTED SUCCESSFULLY
 				$response['notification']['type']    = "success";
@@ -26,8 +34,20 @@
 				$response['notification']['message'] = "Something went wrong while publishing your Post.";
 			}
 			$fn->setSession( $response );
-			header( "Location: write_blog.php" );
+			//header( "Location: write_blog.php" );
 			break;
+
+		case "getPostsByAuthor":
+			$posts = $p->getAllPostsByAuthor( $fn::getSession()['author']['author_id'], $post['count'], $post['page'] );
+			print_r( json_encode( $posts ) );
+			break;
+
+		case "postUpdate":
+			unset( $post['reqfor'] );
+			$posts = $fn->insertUpdate( 'posts', $post, array( 'for' => 'update' ) );
+			print_r( json_encode( $posts ) );
+			break;
+
 		default:
 			break;
 	}
