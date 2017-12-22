@@ -131,7 +131,7 @@
             url: "manage/post_handler.php",
             data: post,
             success: function (ret) {
-                ret = JSON.parse(ret);
+                //ret = JSON.parse(ret);
                 console.log(ret);
             }
         });

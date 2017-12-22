@@ -22,8 +22,8 @@
 		}
 
 		public function getAllPosts( $count = 10, $page = 1 ) {
-			$offset = ( ( ( $page * $count ) - $count ) + 1 );
-			$sql    = "SELECT * FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id WHERE p.status='active' ORDER BY a.created_at DESC LIMIT {$count} OFFSET {$offset}";
+			$offset = ( ( ( $page * $count ) - $count ) );
+			$sql    = "SELECT p.id AS post_id, p.status AS post_status, p.created_at AS post_date, pc.category, p.*, a.* FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id LEFT JOIN post_categories AS pc ON pc.id = p.post_category_id WHERE p.status='active' ORDER BY a.created_at DESC LIMIT {$count} OFFSET {$offset}";
 			$qry    = functions::$conn->prepare( $sql );
 			$qry->execute();
 			$res = $qry->fetchAll( PDO::FETCH_ASSOC );
@@ -31,8 +31,8 @@
 		}
 
 		public function getAllPostsByAuthor( $author, $count = 10, $page = 1 ) {
-			$offset = ( ( ( $page * $count ) - $count ) + 1 );
-			$sql    = "SELECT p.id AS post_id, p.status AS post_status, p.*, a.* FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id WHERE a.id = :author_id ORDER BY a.created_at DESC LIMIT {$count} OFFSET {$offset}";
+			$offset = ( ( ( $page * $count ) - $count ) );
+			$sql    = "SELECT p.id AS post_id, p.status AS post_status, p.created_at AS post_date, pc.category, p.*, a.* FROM posts AS p LEFT JOIN users AS a ON a.id = p.author_id LEFT JOIN post_categories AS pc ON pc.id = p.post_category_id WHERE a.id = :author_id ORDER BY a.created_at DESC LIMIT {$count} OFFSET {$offset}";
 
 			$qry    = functions::$conn->prepare( $sql );
 			$qry->bindParam( ':author_id', $author, PDO::PARAM_INT );

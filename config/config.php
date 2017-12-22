@@ -15,7 +15,7 @@
 			define( "BASE_FOLDER", "blogspot" );
 			break;
 		case "production":
-			define( "HOST", "localhost" );
+			define( "HOST", "10.100.9.44" );
 			define( "PORT", "3306" );
 			define( "DB_USER", "navin" );
 			define( "DB_PASSWORD", "navin21594" );

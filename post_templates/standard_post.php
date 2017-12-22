@@ -1,12 +1,3 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: navin
- * Date: 12/12/2017
- * Time: 6:18 PM
- */
-?>
-
 <!-- Start Post -->
 <div class="blog-post standard-post">
     <!-- Post Content -->

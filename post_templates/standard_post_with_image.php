@@ -1,19 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: navin
- * Date: 12/12/2017
- * Time: 6:20 PM
- */
-?>
-
 <!-- Start Post -->
 <div class="blog-post standard-post">
     <!-- Post Thumb -->
     <div class="post-head">
         <a href="#">
             <div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
-            <img alt="" src="images/blog-05.jpg">
+            <img alt="[@post_title]" src="[@post_image_url]">
         </a>
     </div>
     <!-- Post Content -->
